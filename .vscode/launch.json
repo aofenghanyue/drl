@@ -12,7 +12,8 @@
             "console": "integratedTerminal",
             "env": {
                 "PYTHONPATH": "${workspaceFolder}",
-                "minGWPath": "C:\\Users\\17721\\Documents\\workwork\\drl\\extern\\minGW64\\bin"
+                "minGWPath": "C:\\Users\\17721\\Documents\\workwork\\drl\\extern\\minGW64\\bin",
+                "MODEL_PATH": "${workspaceFolder}\\model_save"
             }
         }
     ]
