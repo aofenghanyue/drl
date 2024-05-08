@@ -6,7 +6,7 @@ from build import flyBall as env
 from ddpg import DDPGAgent
 import numpy as np
 
-DEBUG_MODE = True
+DEBUG_MODE = False
 
 # initialize environment
 env.reset()

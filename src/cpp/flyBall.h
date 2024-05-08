@@ -48,12 +48,12 @@ class flyBall final
 {
  public:
   struct B_flyBall_T {
-    real_T y;
     real_T vy_m;
     real_T vy;
-    real_T reward;
+    real_T y;
     real_T ay_c;
     real_T ay;
+    real_T reward;
   };
 
   struct X_flyBall_T {

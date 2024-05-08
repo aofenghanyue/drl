@@ -67,7 +67,7 @@ void flyBall::rt_ertODEUpdateContinuousStates(RTWSolverInfo *si )
 
 void flyBall::step()
 {
-  real_T rtb_Clock;
+  real_T Clock;
   boolean_T OR;
   if (rtmIsMajorTimeStep((&flyBall_M))) {
     rtsiSetSolverStopTime(&(&flyBall_M)->solverInfo,(((&flyBall_M)
@@ -78,31 +78,31 @@ void flyBall::step()
     (&flyBall_M)->Timing.t[0] = rtsiGetT(&(&flyBall_M)->solverInfo);
   }
 
-  rtb_Clock = (&flyBall_M)->Timing.t[0];
-  OR = ((rtb_Clock >= 10.0) || (flyBall_X.y_CSTATE <= 0.0));
+  Clock = (&flyBall_M)->Timing.t[0];
+  OR = ((Clock >= 10.0) || (flyBall_X.y_CSTATE <= 0.0));
   if (rtmIsMajorTimeStep((&flyBall_M)) && OR) {
     rtmSetStopRequested((&flyBall_M), 1);
   }
 
-  flyBall_B.y = flyBall_X.y_CSTATE;
   flyBall_B.vy_m = flyBall_X.vy_CSTATE;
   flyBall_B.vy = flyBall_B.vy_m;
-  if (OR) {
-    real_T rtb_Gain;
-    real_T rtb_Square1;
-    real_T rtb_Square2;
-    rtb_Gain = flyBall_B.vy - flyBall_P.target_vy;
-    rtb_Square2 = rtb_Gain * rtb_Gain;
-    rtb_Gain = (flyBall_B.y - flyBall_P.target_y) * 0.33333333333333331;
-    rtb_Square1 = rtb_Gain * rtb_Gain;
-    rtb_Gain = (rtb_Clock - flyBall_P.target_t) * 10.0;
-    flyBall_B.reward = ((rtb_Gain * rtb_Gain + rtb_Square1) + rtb_Square2) *
-      -0.01 + 5.0;
-  } else {
-    flyBall_B.reward = -0.001;
-  }
-
+  flyBall_B.y = flyBall_X.y_CSTATE;
   if (rtmIsMajorTimeStep((&flyBall_M))) {
+    if (OR) {
+      real_T rtb_Gain;
+      real_T rtb_Square1;
+      real_T rtb_Square2;
+      rtb_Gain = flyBall_B.vy - flyBall_P.target_vy;
+      rtb_Square2 = rtb_Gain * rtb_Gain;
+      rtb_Gain = (flyBall_B.y - flyBall_P.target_y) * 0.33333333333333331;
+      rtb_Square1 = rtb_Gain * rtb_Gain;
+      rtb_Gain = (Clock - flyBall_P.target_t) * 10.0;
+      flyBall_B.reward = ((rtb_Gain * rtb_Gain + rtb_Square1) + rtb_Square2) *
+        -0.01 + 5.0;
+    } else {
+      flyBall_B.reward = -0.001;
+    }
+
     flyBall_B.ay_c = flyBall_P.control + -9.8;
     flyBall_B.ay = flyBall_B.ay_c;
   }
